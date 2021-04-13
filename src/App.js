@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, NavLink, Switch } from 'react-router-dom';
+import { useEffect } from 'react';
+import filmsApi from './Services/Films.Api';
+import Container from './Components/Container/Container';
+import Homepage from './Views/Homepage';
+import MoviePage from './Views/MoviePage';
+import MovieDetailsPage from '';
 
 function App() {
+  useEffect(() => {
+    filmsApi.fetchMovieReviews();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <ul>
+        <li>
+          <NavLink
+            exact
+            to="/"
+            className='NavLink'
+            activeClassName='Navlink--active'
+          >
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/movies"
+            className="Navlink"
+            activeClassName="Navlink--active"
+          >
+            Movies
+          </NavLink>
+        </li>
+      </ul>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/movies" component={MoviesPage} />
+        <Route path="/movies/:movieId" component={MovieDetailsPage} />
+      </Switch>
+    </Container>
   );
 }
 
