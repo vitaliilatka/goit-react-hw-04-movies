@@ -1,4 +1,4 @@
-import { Route, NavLink, Switch } from 'react-router-dom';
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 import { useEffect } from 'react';
 import filmsApi from './Services/Films.Api';
 import Container from './Components/Container/Container';
@@ -37,6 +37,7 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/movies" component={MoviesPage} />
         <Route path="/movies/:movieId" component={MovieDetailsPage} />
+        <Redirect to='/' />
       </Switch>
     </Container>
   );
