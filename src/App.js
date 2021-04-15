@@ -2,9 +2,9 @@ import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 import { useEffect } from 'react';
 import filmsApi from './Services/Films.Api';
 import Container from './Components/Container/Container';
-import Homepage from './Views/Homepage';
-import MoviePage from './Views/MoviePage';
-import MovieDetailsPage from '';
+import HomePage from './Views/HomePage';
+import MoviesPage from './Views/MoviesPage';
+import MovieDetailsPage from './Views/MovieDetailsPage';
 
 function App() {
   useEffect(() => {
