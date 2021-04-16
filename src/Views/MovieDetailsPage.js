@@ -1,8 +1,17 @@
-import { useEffect, useState } from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { useEffect, useState, Suspense, lazy } from 'react';
+import { NavLink, Route, useHistory, useLocation } from 'react-router-dom';
 import filmsApi from '../services/films-api';
-import Cast from '../components/Cast';
-import Reviews from '../components/Reviews';
+import MovieDetail from '../Components/MovieDetail';
+import routes from '../routes';
+import Loader from '../Components/Loader/Loader';
+
+const Cast = lazy(() =>
+    import('../Components/Cast/Cast' /* webpack ChunkName "cast" */),
+);
+
+const Review = lazy(() =>
+    import('../Components/Reviews/Reviews' /* webpack ChunkName "reviews" */),
+);
 
 const MovieDetailsPage = ({ match }) => {
     const [movie, setMovie] = useState({
@@ -11,9 +20,10 @@ const MovieDetailsPage = ({ match }) => {
         poster_path: null,
         genres: null,
         release_date: '',
+        vote_average: '',
     });
-    const { title, overview, poster_path, genres, release_date } = movie;
-    const movieId = Number(match.params.movieId);
+    const { state } = useLocation();
+    const history = Number(match.params.movieId);
 
     useEffect(() => {
         async function fetchdata() {
@@ -26,33 +36,54 @@ const MovieDetailsPage = ({ match }) => {
         }
         fetchdata();
     }, []);
+
+    const handleGoBack = () => {
+        history.push({
+            pathname: state?.from.pathname || routes.home,
+            search: state?.from.search,
+            state,
+        });
+    };
+
     return (
         <>
-            <h1>Это страница с детальной информацией о кинофильме</h1>
-            {poster_path && (
-                <img
-                    src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                    alt={title}
-                    width="320"
-                />
+            <button type="button" onClick={handleGoBack}>
+                Go back
+            </button>
+            {movie.poster_path ? (
+                <MovieDetail movie={movie} />
+            ) : (
+                <h2>Sorry, details not found</h2>
             )}
-            <h2>{title}</h2>
-            <p>{release_date}</p>
-            <p>{overview}</p>
-            <h3>Genres</h3>
-            <ul>
-                {genres && genres.map(({ id, name }) => <li key={id}>{name}</li>)}
-            </ul>
-            <ul>
-                <li>
-                    <NavLink to={`${match.url}/cast`}>Cast</NavLink>
-                </li>
-                <li>
-                    <NavLink to={`${match.url}/reviews`}>Reviews</NavLink>
-                </li>
-            </ul>
-            <Route path={`${match.path}/cast`} component={Cast} />
-            <Route path={`${match.path}/reviews`} component={Reviews} />
+            <div>
+                <h3>Additional information</h3>
+                <ul>
+                    <li>
+                        <NavLink
+                            to={{
+                                pathname: `${match.url}/cast`,
+                                state,
+                            }}
+                        >
+                            Cast
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to={{
+                                pathname: `${match.url}/reviews`,
+                                state,
+                            }}
+                        >
+                            Reviews
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
+            <Suspense fallback={<Loader />}>
+                <Route path={`${match.path}/cast`} component={Cast} />
+                <Route path={`${match.path}/reviews`} component={Reviews} />
+            </Suspense>
         </>
     );
 };
