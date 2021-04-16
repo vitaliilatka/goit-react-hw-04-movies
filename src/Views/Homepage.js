@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import filmsApi from '../services/films-api';
+import MoviesList from '../Components/MoviesList/MoviesList';
 
 const HomePage = () => {
     const [movies, setMovies] = useState([]);
@@ -15,25 +15,10 @@ const HomePage = () => {
 
     return (
         <>
-            <h1>Это домашняя страница</h1>
-            <ul>
-                {movies.map(({ id, title, poster_path }) => (
-                    <li key={id}>
-                        <Link to={`/movies/${id}`}>
-                            <img
-                                src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                                alt={title}
-                                width="300"
-                            />
-                            <p>{title}</p>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+            <h1>The most popular movies today</h1>
+            <MoviesList movies={movies} />
         </>
     );
 };
 
 export default HomePage;
-
-//<img src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="{{title}}" data-id="{{id}}"

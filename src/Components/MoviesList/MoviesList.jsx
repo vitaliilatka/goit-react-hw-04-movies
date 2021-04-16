@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, withRouter, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import unnamed from '../../Images/unnamed.jpg';
 import styles from './MoviesList.module.css';
-const MoviesList = ({ movies, query = '', from = '' }) => {
+
+const MoviesList = ({ movies, query }) => {
+    const location = useLocation();
     return (
         <>
             <ul>
@@ -11,7 +14,11 @@ const MoviesList = ({ movies, query = '', from = '' }) => {
                         : unnamed;
                     return (
                         <li key={id}>
-                            <Link to={{ pathname: `/movies/${id}`, state: { query, from } }}>
+                            <Link
+                                to={{
+                                    pathname: `/movies/${id}`, state: { from: location, query },
+                                }}
+                            >
                                 <img src={imgUrl} alt={title} />
                                 <p>{title ? title : name}</p>
                             </Link>
@@ -21,6 +28,15 @@ const MoviesList = ({ movies, query = '', from = '' }) => {
             </ul>
         </>
     );
+};
+
+MoviesList.defaultProps = {
+    query: '',
+};
+
+MoviesList.propTypes = {
+    movies: PropTypes.arrayOf(PropTypes.shape({})),
+    query: PropTypes.string,
 };
 
 export default withRouter(MoviesList);

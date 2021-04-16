@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const API_KEY = '8765af0175deb1ea94d186ddc499f755';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 axios.defaults.params = {
@@ -15,7 +16,7 @@ const fetchTrendingMovies = () => {
 const searchMovie = (query = 'Bond') => {
     return axios
         .get(`/search/movie?query=${query}`)
-        .then(({ data: { results } }) => console.log(results));
+        .then(({ data: { results } }) => results);
 };
 
 const fetchhMovieInfo = (movieId = 414) => {
