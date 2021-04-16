@@ -12,7 +12,7 @@ const fetchTrendingMovies = () => {
         .then(({ data: { results } }) => results);
 };
 
-const searchMovie = (query = 'Batman') => {
+const searchMovie = (query = 'Bond') => {
     return axios
         .get(`/search/movie?query=${query}`)
         .then(({ data: { results } }) => console.log(results));
