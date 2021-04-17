@@ -1,44 +1,34 @@
-import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
-import { useEffect } from 'react';
-import filmsApi from './Services/Films.Api';
+import { Suspense, lazy } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import routes from './routes';
 import Container from './Components/Container/Container';
-import HomePage from './Views/HomePage';
-import MoviesPage from './Views/MoviesPage';
-import MovieDetailsPage from './Views/MovieDetailsPage';
+import AppBar from './Components/AppBar/AppBar';
+import Loader from './Components/Loader/Loader';
+
+const HomePage = lazy(() =>
+  import('./Views/HomePage' /*webpack chunkName: 'home-page' */),
+);
+
+const MoviesPage = lazy(() =>
+  import('./Views/MoviesPage' /*webpack chunkName: 'movies-page' */),
+);
+
+const MovieDetailsPage = lazy(() =>
+  import('./Views/MovieDetailsPage' /*webpack chunkName: movies-details-page */),
+);
 
 function App() {
-  useEffect(() => {
-    filmsApi.fetchMovieReviews();
-  }, []);
   return (
     <Container>
-      <ul>
-        <li>
-          <NavLink
-            exact
-            to="/"
-            className='NavLink'
-            activeClassName='Navlink--active'
-          >
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/movies"
-            className="Navlink"
-            activeClassName="Navlink--active"
-          >
-            Movies
-          </NavLink>
-        </li>
-      </ul>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/movies" component={MoviesPage} />
-        <Route path="/movies/:movieId" component={MovieDetailsPage} />
-        <Redirect to='/' />
-      </Switch>
+      <AppBar />
+      <Suspense fallback={<Loader />}>
+        <Switch>
+          <Route exact path={routes.home} component={HomePage} />
+          <Route exact path={routes.movies} component={MoviesPage} />
+          <Route path={routes.movieDetail} component={MovieDetailsPage} />
+          <Redirect to={routes.home} />
+        </Switch>
+      </Suspense>
     </Container>
   );
 }

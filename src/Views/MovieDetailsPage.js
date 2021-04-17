@@ -1,7 +1,7 @@
 import { useEffect, useState, Suspense, lazy } from 'react';
 import { NavLink, Route, useHistory, useLocation } from 'react-router-dom';
-import filmsApi from '../services/films-api';
-import MovieDetail from '../Components/MovieDetail';
+import filmsApi from '../Services/Films.Api';
+import MovieDetail from '../Components/MovieDetail/MovieDetail';
 import routes from '../routes';
 import Loader from '../Components/Loader/Loader';
 
@@ -9,7 +9,7 @@ const Cast = lazy(() =>
     import('../Components/Cast/Cast' /* webpack ChunkName "cast" */),
 );
 
-const Review = lazy(() =>
+const Reviews = lazy(() =>
     import('../Components/Reviews/Reviews' /* webpack ChunkName "reviews" */),
 );
 
@@ -23,7 +23,9 @@ const MovieDetailsPage = ({ match }) => {
         vote_average: '',
     });
     const { state } = useLocation();
-    const history = Number(match.params.movieId);
+    const history = useHistory();
+
+    const movieId = Number(match.params.movieId);
 
     useEffect(() => {
         async function fetchdata() {

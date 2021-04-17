@@ -17,13 +17,13 @@ const Cast = ({ match }) => {
     return (
         <>
             <h5>Cast: </h5>
-            <ul>
+            <ul className={styles.flex}>
                 {cast.map(({ id, name, character, profile_path }) => {
                     const imgUrl = profile_path
                         ? `https://image.tmdb.org/t/p/w500${profile_path}`
                         : defaultAvatar;
                     return (
-                        <li>
+                        <li key={id} className={styles.card}>
                             <img src={imgUrl} alt={name} />
                             <div>
                                 <p>{name}</p>

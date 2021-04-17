@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import filmsApi from '../Services/Films.Api';
-import MoviesList from '../Components/MoviesList';
+import MoviesList from '../Components/MoviesList/MoviesList';
 
 const MoviesPage = () => {
     const history = useHistory();
