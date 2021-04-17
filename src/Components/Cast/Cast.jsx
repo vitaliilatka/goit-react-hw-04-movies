@@ -5,18 +5,27 @@ import defaultAvatar from '../../Images/default-avatar.png';
 
 const Cast = ({ match }) => {
     const [cast, setCast] = useState([]);
+    const [error, setError] = useState(false);
     const movieId = Number(match.params.movieId);
 
-    useEffect(() => {
-        async function fetchdata() {
+    const fetchdata = async () => {
+        try {
             const movieCast = await filmsApi.fetchhMovieCast(movieId);
             setCast(movieCast);
+            setError(false);
+        } catch (err) {
+            setError(`${err}`);
         }
+    };
+
+    useEffect(() => {
         fetchdata();
-    }, []);
+    });
+
     return (
         <>
             <h5>Cast: </h5>
+            {error && <p>404 Error {error}</p>}
             <ul className={styles.flex}>
                 {cast.map(({ id, name, character, profile_path }) => {
                     const imgUrl = profile_path

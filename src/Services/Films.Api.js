@@ -35,10 +35,12 @@ const fetchhMovieReviews = (movieId = 414) => {
         .then(({ data: { results } }) => results);
 };
 
-export default {
+const myMovies = {
     fetchTrendingMovies,
     searchMovie,
     fetchhMovieInfo,
     fetchhMovieCast,
-    fetchhMovieReviews,
-};
+    fetchhMovieReviews
+}
+
+export default myMovies;

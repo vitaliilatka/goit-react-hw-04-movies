@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './MovieDetail.module.css';
+import unnamed from '../../Images/unnamed.jpg';
 
 const MovieDetail = ({ movie }) => {
     const {
@@ -11,11 +12,15 @@ const MovieDetail = ({ movie }) => {
         vote_average,
     } = movie;
 
+    const imgUrl = poster_path
+        ? `https://image.tmdb.org/t/p/w500${poster_path}`
+        : unnamed;
+
     return (
         <>
-            <div>
+            <div className={styles.flex}>
                 <img
-                    src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                    src={imgUrl}
                     alt={title}
                     width='320'
                 />

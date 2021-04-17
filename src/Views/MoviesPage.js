@@ -14,7 +14,7 @@ const MoviesPage = () => {
         filmsApi.searchMovie(inputquery).then(query => {
             setMovies(query);
         });
-    }, []);
+    });
 
     const handleChange = e => {
         setInputQuery(e.currentTarget.value);

@@ -37,7 +37,7 @@ const MovieDetailsPage = ({ match }) => {
             setMovie({ ...movieInfo, release_date: normalizedDate });
         }
         fetchdata();
-    }, []);
+    });
 
     const handleGoBack = () => {
         history.push({
