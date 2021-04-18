@@ -6,10 +6,11 @@ import 'modern-normalize/modern-normalize.css';
 import './styles.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
+
+  <BrowserRouter>
+    <React.StrictMode>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>,
+    </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );

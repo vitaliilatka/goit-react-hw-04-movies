@@ -24,7 +24,7 @@ const MovieDetail = ({ movie }) => {
                     alt={title}
                     width='320'
                 />
-                <div>
+                <div className={styles.info}>
                     <h2>{title}</h2>
                     <p>Release date: {release_date}</p>
                     <p>Rating: {vote_average}</p>
@@ -41,9 +41,9 @@ const MovieDetail = ({ movie }) => {
 
 MovieDetail.propTypes = {
     movie: PropTypes.shape({
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         overview: PropTypes.string.isRequired,
-        poster_path: PropTypes.string.isRequired,
+        poster_path: PropTypes.string,
         release_date: PropTypes.string.isRequired,
         vote_average: PropTypes.number.isRequired,
         genres: PropTypes.arrayOf(PropTypes.shape({}).isRequired),

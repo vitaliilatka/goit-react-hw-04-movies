@@ -16,7 +16,8 @@ const MoviesList = ({ movies, query }) => {
                         <li key={id} className={styles.card}>
                             <Link
                                 to={{
-                                    pathname: `/movies/${id}`, state: { from: location, query },
+                                    pathname: `/movies/${id}`,
+                                    state: { from: location, query },
                                 }}
                             >
                                 <img src={imgUrl} alt={title} />
