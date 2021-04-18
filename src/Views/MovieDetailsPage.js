@@ -22,20 +22,27 @@ const MovieDetailsPage = ({ match }) => {
         release_date: '',
         vote_average: '',
     });
+    const [error, setError] = useState(false);
     const { state } = useLocation();
     const history = useHistory();
 
     const movieId = Number(match.params.movieId);
 
-    useEffect(() => {
-        async function fetchdata() {
+    const fetchdata = async () => {
+        try {
             const movieInfo = await filmsApi.fetchhMovieInfo(movieId);
             const normalizedDate = await movieInfo.release_date
                 .split('-')
                 .reverse()
                 .join('.');
             setMovie({ ...movieInfo, release_date: normalizedDate });
+            setError(false);
+        } catch (err) {
+            setError(`${err}`);
         }
+    };
+
+    useEffect(() => {
         fetchdata();
     });
 
@@ -49,19 +56,18 @@ const MovieDetailsPage = ({ match }) => {
 
     return (
         <>
-            <button type="button" onClick={handleGoBack}>
+            <button type="button" className='btn' onClick={handleGoBack}>
                 Go back
             </button>
-            {movie.poster_path ? (
-                <MovieDetail movie={movie} />
-            ) : (
-                <h2>Sorry, details not found</h2>
-            )}
+            {error && <p>404 error mistake...{error}</p>}
+            <MovieDetail movie={movie} />
             <div>
                 <h3>Additional information</h3>
-                <ul>
+                <ul className='add-info-block'>
                     <li>
                         <NavLink
+                            className='add-info'
+                            activeClassName='add-info--active'
                             to={{
                                 pathname: `${match.url}/cast`,
                                 state,
@@ -72,6 +78,8 @@ const MovieDetailsPage = ({ match }) => {
                     </li>
                     <li>
                         <NavLink
+                            className='add-info'
+                            activeClassName='add-info--active'
                             to={{
                                 pathname: `${match.url}/reviews`,
                                 state,
