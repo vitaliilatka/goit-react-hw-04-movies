@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import filmsApi from '../Services/Films.Api';
 import MoviesList from '../Components/MoviesList/MoviesList';
-import { CSSTransition } from 'react-transition-group';
 
 const MoviesPage = () => {
     const history = useHistory();
@@ -29,7 +29,7 @@ const MoviesPage = () => {
     useEffect(() => {
         if (!inputquery) return;
         fetchdata();
-    });
+    }, []);
 
     const handleChange = e => {
         setInputQuery(e.currentTarget.value);
@@ -44,27 +44,28 @@ const MoviesPage = () => {
             <h1>Search your favourite movie</h1>
             <form onSubmit={handleSubmit}>
                 <input
-                    className='input'
-                    type='text'
+                    className="input"
+                    type="text"
                     value={inputquery}
-                    autoComplete='off'
+                    autoComplete="off"
                     autoFocus
                     onChange={handleChange}
                 />
-                <button type='submit' className='btn'>
+                <button type="submit" className="btn">
                     Search
-                </button>
+        </button>
             </form>
-            {error && <p>404 error mistake... {error}</p>}
+            {error && <p>Oops, something went wrong... {error}</p>}
             {movies.length === 0 && <p>No results</p>}
             <CSSTransition
                 in={!isLoading}
-                classNames='fade'
+                classNames="fade"
                 unmountOnExit
                 timeout={1500}
             >
                 <MoviesList movies={movies} query={inputquery} />
             </CSSTransition>
+            {/* <MoviesList movies={movies} query={inputquery} /> */}
         </>
     );
 };
