@@ -6,7 +6,7 @@ import styles from './MoviesList.module.css';
 const MoviesList = ({ movies, query }) => {
     const location = useLocation();
     return (
-        <>
+        <div>
             <ul className={styles.list}>
                 {movies.map(({ id, title, name, poster_path }) => {
                     const imgUrl = poster_path
@@ -27,7 +27,7 @@ const MoviesList = ({ movies, query }) => {
                     );
                 })}
             </ul>
-        </>
+        </div>
     );
 };
 

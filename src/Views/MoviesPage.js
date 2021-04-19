@@ -61,7 +61,7 @@ const MoviesPage = () => {
                 in={!isLoading}
                 classNames='fade'
                 unmountOnExit
-                timeout={1000}
+                timeout={1500}
             >
                 <MoviesList movies={movies} query={inputquery} />
             </CSSTransition>

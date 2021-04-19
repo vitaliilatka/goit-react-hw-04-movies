@@ -29,7 +29,6 @@ const HomePage = () => {
         <>
             <h1>The most popular movies today</h1>
             {error && <p>Error 404 {error}</p>}
-            <p></p>
             <CSSTransition
                 in={!isLoading}
                 classNames="fade"
